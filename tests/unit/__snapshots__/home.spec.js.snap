@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home page É uma página do vue 1`] = `
+<div>
+  <h2>USD Best Price in Brazil</h2>
+  <p>
+    Compare and find in realtime the best effective prices in Brazil's top USD exchanges, considering fees.
+    Click on the exchange row to view operation details.
+  </p>
+  <div>
+    <currency-component-stub class="currency-from"></currency-component-stub>
+    <currency-component-stub class="currency-to"></currency-component-stub>
+  </div>
+</div>
+`;

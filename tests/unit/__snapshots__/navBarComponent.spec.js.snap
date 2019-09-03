@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar Component É um component do vue 1`] = `
+<div>
+  <div>
+    <menu-button-component-stub></menu-button-component-stub>
+    <menu-button-component-stub></menu-button-component-stub>
+    <menu-button-component-stub></menu-button-component-stub>
+    <menu-button-component-stub></menu-button-component-stub>
+    <menu-button-component-stub></menu-button-component-stub>
+  </div>
+  <login-logout-button-component-stub></login-logout-button-component-stub>
+  <select-language-component-stub></select-language-component-stub>
+</div>
+`;
