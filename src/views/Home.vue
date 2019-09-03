@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <h2>USD Best Price in Brazil</h2>
+    <p>
+      Compare and find in realtime the best effective prices in Brazil's top USD exchanges, considering fees.
+      Click on the exchange row to view operation details.
+    </p>
+    <div>
+      <currency-component class="currency-from" />
+      <currency-component class="currency-to" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import CurrencyComponent from "@/components/CurrencyComponent";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    CurrencyComponent
   }
 };
 </script>
