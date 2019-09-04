@@ -10,7 +10,8 @@ import {
   Button,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Input
 } from "element-ui";
 
 import "./assets/bleutest-icons/style.css";
@@ -29,6 +30,7 @@ Vue.use(Button);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Input);
 Vue.config.productionTip = false;
 
 new Vue({
