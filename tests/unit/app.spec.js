@@ -1,16 +1,18 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 
 import App from "@/App";
 import NavBarComponent from "@/components/NavBarComponent";
 
-import Vue from "vue";
 import Router from "vue-router";
+import ElementUI from "element-ui";
 
-Vue.use(Router);
+const localVue = createLocalVue();
+localVue.use(Router);
+localVue.use(ElementUI);
 
 describe("App page", () => {
   const build = () => {
-    const wrapper = shallowMount(App);
+    const wrapper = shallowMount(App, { localVue });
 
     return {
       wrapper,

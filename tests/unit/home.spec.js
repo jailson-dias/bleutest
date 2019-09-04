@@ -1,9 +1,13 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Home from "@/views/Home";
+import ElementUI from "element-ui";
+
+const localVue = createLocalVue();
+localVue.use(ElementUI);
 
 describe("Home page", () => {
   const build = () => {
-    const wrapper = shallowMount(Home);
+    const wrapper = shallowMount(Home, { localVue });
 
     return {
       wrapper,

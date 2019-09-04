@@ -1,22 +1,24 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 
 import NavBarComponent from "@/components/NavBarComponent";
 import LoginLogoutButtonComponent from "@/components/LoginLogoutButtonComponent";
-import SelectLanguageComponent from "@/components/SelectLanguageComponent";
+import SelectMenuCurrencyComponent from "@/components/SelectMenuCurrencyComponent";
 
-import Vue from "vue";
 import Router from "vue-router";
+import ElementUI from "element-ui";
 
-Vue.use(Router);
+const localVue = createLocalVue();
+localVue.use(Router);
+localVue.use(ElementUI);
 
 describe("NavBar Component", () => {
   const build = () => {
-    const wrapper = shallowMount(NavBarComponent);
+    const wrapper = shallowMount(NavBarComponent, { localVue });
 
     return {
       wrapper,
       loginLogoutButton: () => wrapper.find(LoginLogoutButtonComponent),
-      selectLanguage: () => wrapper.find(SelectLanguageComponent)
+      selectLanguage: () => wrapper.find(SelectMenuCurrencyComponent)
     };
   };
 

@@ -1,15 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavBar Component É um component do vue 1`] = `
-<div>
-  <div>
-    <menu-button-component-stub></menu-button-component-stub>
-    <menu-button-component-stub></menu-button-component-stub>
-    <menu-button-component-stub></menu-button-component-stub>
-    <menu-button-component-stub></menu-button-component-stub>
-    <menu-button-component-stub></menu-button-component-stub>
-  </div>
-  <login-logout-button-component-stub></login-logout-button-component-stub>
-  <select-language-component-stub></select-language-component-stub>
+<div id="navbar">
+  <el-row-stub tag="div" justify="start" align="top">
+    <el-col-stub span="24" tag="div" offset="3" lg="4" class="logo">
+      <logo-component-stub></logo-component-stub>
+    </el-col-stub>
+    <el-col-stub span="24" tag="div" offset="3" lg="12" class="menu">
+      <el-menu-stub mode="horizontal" defaultactive="2" menutrigger="hover" backgroundcolor="#0080DD" textcolor="#FFFFFF" activetextcolor="#FFFFFF" collapsetransition="true">
+        <el-menu-item-stub index="1">Bleutest BUY</el-menu-item-stub>
+        <el-menu-item-stub index="2">Compare</el-menu-item-stub>
+        <el-menu-item-stub index="3">Remittance</el-menu-item-stub>
+        <el-menu-item-stub index="4">Exchanges</el-menu-item-stub>
+        <el-menu-item-stub index="5">Exchanges' Fees</el-menu-item-stub>
+      </el-menu-stub>
+      <login-logout-button-component-stub></login-logout-button-component-stub>
+      <select-menu-currency-component-stub></select-menu-currency-component-stub>
+    </el-col-stub>
+  </el-row-stub>
 </div>
 `;
