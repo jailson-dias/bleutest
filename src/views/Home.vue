@@ -65,6 +65,7 @@ export default {
     };
   },
   mounted() {
+    // Iniciando a aplicação com a conversão de 1 USD para BRL
     this.currencyQuote(1);
   },
   methods: {

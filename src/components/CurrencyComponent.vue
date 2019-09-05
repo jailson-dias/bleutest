@@ -42,6 +42,7 @@ export default {
     };
   },
   computed: {
+    // Formata o número digitado, para permitir apenas input de números e deixar o número com duas casas decimais
     valueFormatted: {
       get: function() {
         var value = floatToBrNumber(this.mValue);
@@ -57,6 +58,7 @@ export default {
     }
   },
   methods: {
+    // métodos para converter os números do formato br para float e de float para o formato br
     brNumberToFloat,
     floatToBrNumber
   }
