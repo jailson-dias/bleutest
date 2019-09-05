@@ -18,8 +18,8 @@
     <el-row>
       <el-col :offset="8" :lg="8">
         <div class="currency-buttons">
-          <currency-component class="currency-from" />
-          <currency-component class="currency-to" />
+          <currency-component class="currency-from" @quotation="currencyQuote" />
+          <currency-component class="currency-to" :quote="quote.bid" />
         </div>
       </el-col>
     </el-row>
@@ -27,12 +27,24 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CurrencyComponent from "@/components/CurrencyComponent";
+import { CURRENCY_QUOTE } from "@/store/types";
 
 export default {
   name: "home",
   components: {
     CurrencyComponent
+  },
+  computed: {
+    ...mapState({
+      quote: "quote"
+    })
+  },
+  methods: {
+    currencyQuote(quote) {
+      this.$store.dispatch(CURRENCY_QUOTE, quote);
+    }
   }
 };
 </script>

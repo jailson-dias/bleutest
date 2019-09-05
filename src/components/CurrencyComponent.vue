@@ -1,6 +1,10 @@
 <template>
   <div class="currency-component">
-    <el-input placeholder="Please input" v-model="input"></el-input>
+    <el-input
+      placeholder="Please input"
+      v-model="value"
+      @submit="$emit('quotation', {currency: 'BRL-USD', value})"
+    ></el-input>
     <div class="vertical-div" />
     <el-dropdown trigger="click">
       <span class="dropdown-currency el-dropdown-link">
@@ -18,9 +22,12 @@
 <script>
 export default {
   name: "CurrencyComponent",
+  props: {
+    value: String
+  },
   data() {
     return {
-      input: "100,00"
+      // value: "100,00"
     };
   }
 };
