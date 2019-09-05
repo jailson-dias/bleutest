@@ -11,6 +11,17 @@ module.exports = {
           }
         ]
       ]
+    },
+    production: {
+      plugins: [
+        [
+          "component",
+          {
+            libraryName: "element-ui",
+            styleLibraryName: "theme-chalk"
+          }
+        ]
+      ]
     }
   }
 };
