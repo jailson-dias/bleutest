@@ -18,8 +18,22 @@
     <el-row>
       <el-col :offset="8" :lg="8">
         <div class="currency-buttons">
-          <currency-component class="currency-from" @quotation="currencyQuote" />
-          <currency-component class="currency-to" :quote="quote.bid" />
+          <currency-component
+            class="currency-from"
+            :value="1"
+            @quotation="currencyQuote($event)"
+            @changeCurrency="changeCurrency({ from: $event, to: currency.to })"
+            :currency="currency.from"
+            :available-currencies="availableCurrencies.from"
+          />
+          <currency-component
+            class="currency-to"
+            :value="value.to"
+            @changeCurrency="changeCurrency({ from: currency.from, to: $event })"
+            :currency="currency.to"
+            readonly
+            :available-currencies="availableCurrencies.to"
+          />
         </div>
       </el-col>
     </el-row>
@@ -29,7 +43,7 @@
 <script>
 import { mapState } from "vuex";
 import CurrencyComponent from "@/components/CurrencyComponent";
-import { CURRENCY_QUOTE } from "@/store/types";
+import { CURRENCY_QUOTE, CHANGE_CURRENCY } from "@/store/types";
 
 export default {
   name: "home",
@@ -38,12 +52,36 @@ export default {
   },
   computed: {
     ...mapState({
-      quote: "quote"
+      value: "value",
+      currency: "currency"
     })
   },
+  data() {
+    return {
+      availableCurrencies: {
+        from: ["USD", "EUR", "CAD", "GBP", "ARS"],
+        to: ["BRL"]
+      }
+    };
+  },
+  mounted() {
+    this.currencyQuote(1);
+  },
   methods: {
-    currencyQuote(quote) {
-      this.$store.dispatch(CURRENCY_QUOTE, quote);
+    currencyQuote(value) {
+      this.$store.dispatch(CURRENCY_QUOTE, {
+        currency: this.currency,
+        value: {
+          from: value,
+          to: 0
+        }
+      });
+    },
+    changeCurrency(currency) {
+      this.$store.dispatch(CHANGE_CURRENCY, {
+        currency,
+        value: this.value
+      });
     }
   }
 };
@@ -52,9 +90,6 @@ export default {
 <style>
 #home {
   margin-top: 70px;
-  /* display: flex; */
-  /* align-items: center; */
-  /* background-color: red; */
 }
 </style>
 
@@ -66,9 +101,7 @@ export default {
   font-size: 52px;
   line-height: 61px;
   margin-bottom: 40px;
-
   text-align: center;
-
   color: #003358;
 }
 
@@ -77,16 +110,11 @@ export default {
   margin: 0;
   font-family: Roboto;
   font-style: normal;
-  /* font-weight: normal; */
   font-size: 18px;
   line-height: 32px;
-  /* background-color: green; */
-
   text-align: center;
   letter-spacing: 0.015em;
-
   color: #585858;
-
   opacity: 0.8;
 }
 

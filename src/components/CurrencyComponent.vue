@@ -1,34 +1,64 @@
 <template>
   <div class="currency-component">
     <el-input
-      placeholder="Please input"
-      v-model="value"
-      @submit="$emit('quotation', {currency: 'BRL-USD', value})"
-    ></el-input>
+      v-if="!readonly"
+      placeholder="0,00"
+      v-model="valueFormatted"
+      @keyup.native="$emit('quotation', brNumberToFloat(valueFormatted))"
+    />
+    <el-input v-else placeholder="0,00" :value="floatToBrNumber(value)" readonly />
     <div class="vertical-div" />
-    <el-dropdown trigger="click">
+    <el-dropdown trigger="click" v-if="!readonly">
       <span class="dropdown-currency el-dropdown-link">
-        BRL
+        {{ currency }}
         <span class="icon-leaked-down-arrow"></span>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>brl</el-dropdown-item>
-        <el-dropdown-item>usd</el-dropdown-item>
+        <el-dropdown-item
+          v-for="(currency, index) in availableCurrencies"
+          :key="`currency-${index}`"
+          @click.native="$emit('changeCurrency', currency)"
+        >{{ currency }}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+    <span v-else class="dropdown-currency currency-to-label">{{ currency }}</span>
   </div>
 </template>
 
 <script>
+import { brNumberToFloat, floatToBrNumber } from "@/utils/number";
+
 export default {
   name: "CurrencyComponent",
   props: {
-    value: String
+    value: [String, Number],
+    currency: String,
+    availableCurrencies: Array,
+    readonly: Boolean
   },
   data() {
     return {
-      // value: "100,00"
+      mValue: this.value
     };
+  },
+  computed: {
+    valueFormatted: {
+      get: function() {
+        var value = floatToBrNumber(this.mValue);
+        return value;
+      },
+      set(value) {
+        value = value.replace(/\D/g, "");
+        if (value.length < 1) {
+          value = "0";
+        }
+        this.mValue = parseFloat(value) / 100;
+      }
+    }
+  },
+  methods: {
+    brNumberToFloat,
+    floatToBrNumber
   }
 };
 </script>
@@ -43,7 +73,7 @@ export default {
   border-radius: 16px;
   width: 290px;
   height: 80px;
-  margin: 10px;
+  margin: 5px;
   padding: 20px 0 20px 0;
 }
 
@@ -89,5 +119,11 @@ export default {
 
 .el-dropdown-menu__item {
   text-transform: uppercase;
+}
+
+.currency-to-label {
+  color: #585858;
+  margin-left: 23px;
+  margin-right: 23px;
 }
 </style>

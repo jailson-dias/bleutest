@@ -1,7 +1,10 @@
-import { SET_QUOTE } from "./types";
+import { SET_VALUE, SET_CURRENCY } from "./types";
 
 export default {
-  [SET_QUOTE](state, quote) {
-    state.quote = quote;
+  [SET_VALUE](state, value) {
+    state.value = value;
+  },
+  [SET_CURRENCY](state, currency) {
+    state.currency = currency;
   }
 };
