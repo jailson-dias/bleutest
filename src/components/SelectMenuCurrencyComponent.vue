@@ -22,7 +22,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ButtonMenuCurrencyComponent from "./ButtonMenuCurrencyComponent";
+import { CHANGE_CURRENCY } from "@/store/types";
 
 export default {
   name: "SelectMenuCurrencyComponent",
@@ -42,6 +44,23 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapState({
+      currencyCode: "currency",
+      value: "value"
+    })
+  },
+  methods: {
+    changeCurrency(currencyTo) {
+      this.$store.dispatch(CHANGE_CURRENCY, {
+        currency: {
+          ...this.currencyCode,
+          to: currencyTo
+        },
+        value: this.value
+      });
+    }
   }
 };
 </script>

@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       availableCurrencies: {
-        from: ["USD", "EUR", "CAD", "GBP", "ARS"],
+        from: ["USD", "GBP", "EUR", "CAD", "ARS"],
         to: ["BRL"]
       }
     };
