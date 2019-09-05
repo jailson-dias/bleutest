@@ -11,11 +11,16 @@ import api from "@/api";
 import { brNumberToFloat } from "@/utils/number";
 
 export default {
-  [CURRENCY_QUOTE]({ commit }, { currency, value }) {
+  [CURRENCY_QUOTE]({ commit }, { currency, value, calledFromTo }) {
     api
       .quotation(`${currency.from}-${currency.to}`.toLocaleUpperCase())
       .then(quote => {
-        value.to = brNumberToFloat(quote[currency.from].bid) * value.from;
+        var quotetion = brNumberToFloat(quote[currency.from].bid);
+        if (calledFromTo) {
+          value.from = value.to / quotetion;
+        } else {
+          value.to = value.from * quotetion;
+        }
         commit(SET_VALUE, value);
         return value;
       });

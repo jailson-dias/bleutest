@@ -1,12 +1,12 @@
 <template>
   <div id="home">
     <el-row>
-      <el-col :offset="8" :lg="8">
+      <el-col :offset="8" :md="8">
         <p class="title">USD Best Price in Brazil</p>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :offset="6" :lg="12">
+      <el-col :offset="6" :md="12">
         <div class="subtitle">
           <p>Compare and find in realtime the best effective prices in Brazil's top USD exchanges, considering fees.</p>
           <p>
@@ -16,12 +16,12 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :offset="8" :lg="8">
+      <el-col :offset="8" :md="8">
         <div class="currency-buttons">
           <currency-component
             class="currency-from"
-            :value="1"
-            @quotation="currencyQuote($event)"
+            :value="value.from"
+            @quotation="currencyQuote($event, true)"
             @changeCurrency="changeCurrency({ from: $event, to: currency.to })"
             :currency="currency.from"
             :available-currencies="availableCurrencies.from"
@@ -29,6 +29,7 @@
           <currency-component
             class="currency-to"
             :value="value.to"
+            @quotation="currencyQuote($event)"
             @changeCurrency="changeCurrency({ from: currency.from, to: $event })"
             :currency="currency.to"
             readonly
@@ -66,16 +67,20 @@ export default {
   },
   mounted() {
     // Iniciando a aplicação com a conversão de 1 USD para BRL
-    this.currencyQuote(1);
+    this.currencyQuote(1, true);
   },
   methods: {
-    currencyQuote(value) {
+    currencyQuote(value, from) {
+      var stateValue = this.value;
+      if (from) {
+        stateValue.from = value;
+      } else {
+        stateValue.to = value;
+      }
       this.$store.dispatch(CURRENCY_QUOTE, {
         currency: this.currency,
-        value: {
-          from: value,
-          to: 0
-        }
+        value: stateValue,
+        calledFromTo: from ? false : true
       });
     },
     changeCurrency(currency) {

@@ -1,12 +1,6 @@
 <template>
   <div class="currency-component">
-    <el-input
-      v-if="!readonly"
-      placeholder="0,00"
-      v-model="valueFormatted"
-      @keyup.native="$emit('quotation', brNumberToFloat(valueFormatted))"
-    />
-    <el-input v-else placeholder="0,00" :value="floatToBrNumber(value)" readonly />
+    <el-input placeholder="0,00" v-model="valueFormatted" />
     <div class="vertical-div" />
     <el-dropdown trigger="click" v-if="!readonly">
       <span class="dropdown-currency el-dropdown-link">
@@ -45,7 +39,7 @@ export default {
     // Formata o número digitado, para permitir apenas input de números e deixar o número com duas casas decimais
     valueFormatted: {
       get: function() {
-        var value = floatToBrNumber(this.mValue);
+        var value = floatToBrNumber(this.value);
         return value;
       },
       set(value) {
@@ -53,14 +47,10 @@ export default {
         if (value.length < 1) {
           value = "0";
         }
-        this.mValue = parseFloat(value) / 100;
+
+        this.$emit("quotation", brNumberToFloat(parseFloat(value) / 100));
       }
     }
-  },
-  methods: {
-    // métodos para converter os números do formato br para float e de float para o formato br
-    brNumberToFloat,
-    floatToBrNumber
   }
 };
 </script>

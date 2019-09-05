@@ -1,10 +1,10 @@
 <template>
   <div id="navbar">
     <el-row>
-      <el-col :offset="3" :lg="4" class="logo">
+      <el-col :offset="3" :lg="4" :md="4" class="logo">
         <logo-component />
       </el-col>
-      <el-col :offset="3" :lg="12" class="menu">
+      <el-col :offset="3" :lg="13" :md="13" class="menu">
         <!-- este menu está sem ação -->
         <el-menu
           background-color="#0080DD"
