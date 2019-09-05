@@ -18,8 +18,10 @@ exports[`Home page É uma página do vue 1`] = `
   </el-row-stub>
   <el-row-stub tag="div" justify="start" align="top">
     <el-col-stub span="24" tag="div" offset="8" lg="8">
-      <currency-component-stub class="currency-from"></currency-component-stub>
-      <currency-component-stub class="currency-to"></currency-component-stub>
+      <div class="currency-buttons">
+        <currency-component-stub class="currency-from"></currency-component-stub>
+        <currency-component-stub class="currency-to"></currency-component-stub>
+      </div>
     </el-col-stub>
   </el-row-stub>
 </div>

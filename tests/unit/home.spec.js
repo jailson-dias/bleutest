@@ -1,13 +1,27 @@
+jest.mock("@/store/actions");
 import { shallowMount, createLocalVue } from "@vue/test-utils";
+import Vuex from "vuex";
 import Home from "@/views/Home";
+import actions from "@/store/actions";
+import initialState from "@/store/state";
+import usdBrl from "./fixtures/usdBrl";
+import { CURRENCY_QUOTE } from "@/store/types";
 import ElementUI from "element-ui";
 
 const localVue = createLocalVue();
 localVue.use(ElementUI);
+localVue.use(Vuex);
 
 describe("Home page", () => {
+  let state;
   const build = () => {
-    const wrapper = shallowMount(Home, { localVue });
+    const wrapper = shallowMount(Home, {
+      localVue,
+      store: new Vuex.Store({
+        state,
+        actions
+      })
+    });
 
     return {
       wrapper,
@@ -15,6 +29,11 @@ describe("Home page", () => {
       CurrencyTo: () => wrapper.find(".currency-to")
     };
   };
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    state = { ...initialState };
+  });
 
   it("É uma página do vue", () => {
     const { wrapper } = build();
@@ -26,5 +45,26 @@ describe("Home page", () => {
 
     expect(CurrencyFrom().exists()).toBe(true);
     expect(CurrencyTo().exists()).toBe(true);
+  });
+
+  it("Passar o valor da cotação da moeda destino", () => {
+    state.quote = usdBrl;
+    const { CurrencyTo } = build();
+
+    expect(CurrencyTo().vm.value).toBe(state.quote.bid);
+  });
+
+  it("Fazer a cotação quando recebe o valor da moeda que está sendo convertida", () => {
+    const cotacao = {
+      currency: "USD-BRL",
+      value: 25.69
+    };
+    const { CurrencyFrom } = build();
+
+    CurrencyFrom().vm.$emit("quotation", cotacao);
+
+    // console.log("cotacao", actions[CURRENCY_QUOTE].mock);
+    expect(actions[CURRENCY_QUOTE]).toHaveBeenCalled();
+    expect(actions[CURRENCY_QUOTE].mock.calls[0][1]).toEqual(cotacao);
   });
 });
