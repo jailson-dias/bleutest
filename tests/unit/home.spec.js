@@ -48,23 +48,25 @@ describe("Home page", () => {
   });
 
   it("Passar o valor da cotação da moeda destino", () => {
-    state.quote = usdBrl;
+    state.value = {
+      from: 1,
+      to: 4.09
+    };
     const { CurrencyTo } = build();
 
-    expect(CurrencyTo().vm.value).toBe(state.quote.bid);
+    expect(CurrencyTo().vm.value).toBe(state.value.to);
   });
 
   it("Fazer a cotação quando recebe o valor da moeda que está sendo convertida", () => {
-    const cotacao = {
-      currency: "USD-BRL",
-      value: 25.69
+    state.value = {
+      from: 1,
+      to: 0
     };
     const { CurrencyFrom } = build();
 
-    CurrencyFrom().vm.$emit("quotation", cotacao);
+    CurrencyFrom().vm.$emit("quotation", state.value.from);
 
-    // console.log("cotacao", actions[CURRENCY_QUOTE].mock);
     expect(actions[CURRENCY_QUOTE]).toHaveBeenCalled();
-    expect(actions[CURRENCY_QUOTE].mock.calls[0][1]).toEqual(cotacao);
+    expect(actions[CURRENCY_QUOTE].mock.calls[0][1]).toEqual(state);
   });
 });

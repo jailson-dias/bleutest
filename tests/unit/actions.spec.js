@@ -2,8 +2,7 @@ jest.mock("@/api");
 import flushPromises from "flush-promises";
 import actions from "@/store/actions";
 import api from "@/api";
-import usdBrl from "./fixtures/usdBrl";
-import { CURRENCY_QUOTE, SET_QUOTE } from "@/store/types";
+import { CURRENCY_QUOTE, SET_VALUE } from "@/store/types";
 
 describe("store actions", () => {
   let commit;
@@ -13,12 +12,22 @@ describe("store actions", () => {
   });
 
   it("Fazendo a cotação da moeda", async () => {
-    const currency = "USD-BRL";
+    const currency = {
+      from: "USD",
+      to: "BRL"
+    };
 
-    await actions[CURRENCY_QUOTE]({ commit }, { currency });
+    const value = {
+      from: 1,
+      to: 0
+    };
+
+    await actions[CURRENCY_QUOTE]({ commit }, { currency, value });
     await flushPromises();
 
-    expect(api.quotation).toHaveBeenCalledWith(currency);
-    expect(commit).toHaveBeenCalledWith(SET_QUOTE, usdBrl);
+    expect(api.quotation).toHaveBeenCalledWith(
+      `${currency.from}-${currency.to}`
+    );
+    expect(commit).toHaveBeenCalledWith(SET_VALUE, value);
   });
 });

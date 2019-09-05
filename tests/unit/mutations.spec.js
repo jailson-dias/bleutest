@@ -1,7 +1,6 @@
 import mutations from "@/store/mutations";
 import initialState from "@/store/state";
-import { SET_QUOTE } from "@/store/types";
-import usdBrl from "./fixtures/usdBrl";
+import { SET_VALUE, SET_CURRENCY } from "@/store/types";
 
 describe("mutations", () => {
   let state;
@@ -10,11 +9,25 @@ describe("mutations", () => {
     state = { ...initialState };
   });
 
-  it("Alterando a mutation de quote", () => {
-    const quote = usdBrl;
+  it("Alterando a mutation de value", () => {
+    const value = {
+      from: 1,
+      to: 4.09
+    };
 
-    mutations[SET_QUOTE](state, quote);
+    mutations[SET_VALUE](state, value);
 
-    expect(state.quote).toEqual(quote);
+    expect(state.value).toEqual(value);
+  });
+
+  it("Alterando a mutation de currency", () => {
+    const currency = {
+      from: "USD",
+      to: "BRL"
+    };
+
+    mutations[SET_CURRENCY](state, currency);
+
+    expect(state.currency).toEqual(currency);
   });
 });
