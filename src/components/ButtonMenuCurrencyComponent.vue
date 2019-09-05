@@ -1,12 +1,17 @@
 <template>
   <div id="currency">
-    <img src="@/assets/unitedStatesFlag.svg" alt="Brazil Flag" />
-    <span>brl</span>
+    <img :src="flag" alt="Flag" />
+    <span :class="{'dark-text': dark}">{{code}}</span>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    dark: Boolean,
+    flag: String,
+    code: String
+  },
   name: "ButtonMenuCurrencyComponent"
 };
 </script>
@@ -17,15 +22,11 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* background-color: red; */
-  /* margin-top: 15px;
-  margin-bottom: 5px; */
 }
 
 #currency > img {
   width: 35px;
   height: 28px;
-  /* background-color: red; */
 }
 
 #currency > span {
@@ -33,5 +34,8 @@ export default {
   color: #ffffff;
   margin-left: 8px;
   text-transform: uppercase;
+}
+.dark-text {
+  color: #585858 !important;
 }
 </style>

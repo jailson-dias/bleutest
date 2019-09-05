@@ -1,13 +1,33 @@
 <template>
   <div class="login-logout-button">
-    <el-button>Login</el-button>
-    <!-- <p>sdfd</p> -->
+    <el-button @click.native="loginLogout()">{{user.logged ? "Logout": "Login"}}</el-button>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import { LOGIN, LOGOUT } from "@/store/types";
+
 export default {
-  name: "LoginLogoutButtonComponent"
+  name: "LoginLogoutButtonComponent",
+  computed: {
+    ...mapState({
+      user: "user"
+    })
+  },
+  methods: {
+    ...mapActions({
+      login: LOGIN,
+      logout: LOGOUT
+    }),
+    loginLogout() {
+      if (this.user.logged) {
+        this.logout({ user: { logged: false } });
+      } else {
+        this.login({ user: { logged: true } });
+      }
+    }
+  }
 };
 </script>
 

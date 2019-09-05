@@ -2,17 +2,20 @@
   <div>
     <el-dropdown trigger="click">
       <span class="currency el-dropdown-link">
-        <button-menu-currency-component />
+        <button-menu-currency-component :flag="currency.flag" :code="currency.code" />
         <span class="icon-down-arrow"></span>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>
-          <button-menu-currency-component />
+          <button-menu-currency-component
+            v-for="(currency, index) in availableCurrencies"
+            :key="`currency-${index}`"
+            :flag="currency.flag"
+            :code="currency.code"
+            dark
+            @click.native="changeCurrency(currency.code)"
+          />
         </el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus">Action 2</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus-outline">Action 3</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-check">Action 4</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-check">Action 5</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -20,10 +23,25 @@
 
 <script>
 import ButtonMenuCurrencyComponent from "./ButtonMenuCurrencyComponent";
+
 export default {
   name: "SelectMenuCurrencyComponent",
   components: {
     ButtonMenuCurrencyComponent
+  },
+  data() {
+    return {
+      currency: {
+        flag: require("@/assets/brazilFlag.svg"),
+        code: "BRL"
+      },
+      availableCurrencies: [
+        {
+          flag: require("@/assets/brazilFlag.svg"),
+          code: "BRL"
+        }
+      ]
+    };
   }
 };
 </script>
@@ -49,18 +67,13 @@ export default {
   right: 30%;
   top: 40%;
   bottom: 40%;
-
   background: #ffffff;
-  /* <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M0 0L4 4L8 0H0Z" fill="white"/>
-  </svg> */
 }
 
 .currency.el-dropdown-link {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* background-color: green; */
   margin-top: 15px;
   margin-bottom: 5px;
   margin-left: 10px;
@@ -69,6 +82,5 @@ export default {
 .icon-down-arrow {
   font-size: 5px;
   margin-left: 6px;
-  /* background-color: red; */
 }
 </style>

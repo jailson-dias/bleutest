@@ -2,7 +2,10 @@ import {
   CURRENCY_QUOTE,
   CHANGE_CURRENCY,
   SET_VALUE,
-  SET_CURRENCY
+  SET_CURRENCY,
+  LOGIN,
+  LOGOUT,
+  SET_USER
 } from "./types";
 import api from "@/api";
 import { brNumberToFloat } from "@/utils/number";
@@ -27,5 +30,11 @@ export default {
         error: "É preciso definir o currency from e to"
       });
     });
+  },
+  [LOGIN]({ commit }, { user }) {
+    commit(SET_USER, user);
+  },
+  [LOGOUT]({ commit }, { user }) {
+    commit(SET_USER, user);
   }
 };

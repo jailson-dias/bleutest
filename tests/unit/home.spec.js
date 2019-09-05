@@ -4,7 +4,6 @@ import Vuex from "vuex";
 import Home from "@/views/Home";
 import actions from "@/store/actions";
 import initialState from "@/store/state";
-import usdBrl from "./fixtures/usdBrl";
 import { CURRENCY_QUOTE } from "@/store/types";
 import ElementUI from "element-ui";
 
@@ -67,6 +66,6 @@ describe("Home page", () => {
     CurrencyFrom().vm.$emit("quotation", state.value.from);
 
     expect(actions[CURRENCY_QUOTE]).toHaveBeenCalled();
-    expect(actions[CURRENCY_QUOTE].mock.calls[0][1]).toEqual(state);
+    expect(actions[CURRENCY_QUOTE].mock.calls[0][1].value).toEqual(state.value);
   });
 });
